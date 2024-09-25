@@ -91,7 +91,9 @@ abstract class ServerAwareCommand extends Command
         try {
             return Http::withOptions([
                 'verify' => false,
-            ])->get(config('expose.server_endpoint', static::DEFAULT_SERVER_ENDPOINT))->json();
+            ])->get(
+                config('expose.server_endpoint', static::DEFAULT_SERVER_ENDPOINT)
+            )->json();
         } catch (\Throwable $e) {
             return [];
         }
