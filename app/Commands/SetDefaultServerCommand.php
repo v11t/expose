@@ -49,7 +49,7 @@ class SetDefaultServerCommand extends Command
             return;
         }
 
-        render('<div class="ml-2 my-1"><div class="text-pink-500 font-bold"><span class="font-bold pr-0.5">></span> Expose</div>');
+        render('<div class="ml-2"><div class="text-pink-500 font-bold"><span class="font-bold pr-0.5">></span> Expose</div>');
 
 
         if (is_null($server = config('expose.default_server'))) {
@@ -59,7 +59,7 @@ class SetDefaultServerCommand extends Command
         }
 
 
-        if(confirm('Would you like to set a new default server?')) {
+        if(confirm('Would you like to set a new default server?', false)) {
             (new SetUpExposeDefaultServer)(config('expose.auth_token'));
         }
     }
