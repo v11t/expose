@@ -46,7 +46,7 @@ class StoreAuthenticationTokenCommand extends Command
 
         if (!$this->option('no-interaction')) {
 
-            render('<div class="ml-2"><div class="text-pink-500 font-bold"><span class="font-bold pr-0.5">></span> Expose</div>');
+            render('<div class="ml-2 text-pink-500 font-bold"><span class="pr-0.5">></span> Expose</div>');
             render("<div class='ml-3'>Setting up new Expose token <span class='font-bold'>$token</span>...</div>");
 
             (new SetupExposeProToken)($token);
