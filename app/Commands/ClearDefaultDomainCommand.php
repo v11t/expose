@@ -23,24 +23,26 @@ class ClearDefaultDomainCommand extends Command
 
     public function handle()
     {
-        render('<div class="ml-2 text-pink-500 font-bold"><span class="pr-0.5">></span> Expose</div>');
-
+        
         $configFile = implode(DIRECTORY_SEPARATOR, [
             $_SERVER['HOME'] ?? $_SERVER['USERPROFILE'],
             '.expose',
             'config.php',
         ]);
-
+        
         if (! file_exists($configFile)) {
             @mkdir(dirname($configFile), 0777, true);
             $updatedConfigFile = $this->modifyConfigurationFile(base_path('config/expose.php'));
         } else {
             $updatedConfigFile = $this->modifyConfigurationFile($configFile);
         }
-
+        
         file_put_contents($configFile, $updatedConfigFile);
-
-        render("<div class='ml-3'>✔ Cleared the Expose default domain.</div>");
+        
+        if(!$this->option('no-interaction')) {
+            render('<div class="ml-2 text-pink-500 font-bold"><span class="pr-0.5">></span> Expose</div>');
+            render("<div class='ml-3'>✔ Cleared the Expose default domain.</div>");
+        }
     }
 
     protected function modifyConfigurationFile(string $configFile)

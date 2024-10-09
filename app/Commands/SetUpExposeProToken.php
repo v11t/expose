@@ -6,7 +6,7 @@ use App\Contracts\FetchesPlatformDataContract;
 use App\Traits\FetchesPlatformData;
 use Illuminate\Support\Facades\Artisan;
 
-class SetupExposeProToken implements FetchesPlatformDataContract
+class SetUpExposeProToken implements FetchesPlatformDataContract
 {
     use FetchesPlatformData;
 
@@ -22,7 +22,7 @@ class SetupExposeProToken implements FetchesPlatformDataContract
         if ($this->isProToken() && $this->hasTeamDomains()) {
             return (new SetUpExposeDefaultDomain)($token);
         } else {
-            Artisan::call("default-domain:clear");
+            Artisan::call("default-domain:clear --no-interaction");
             return (new SetUpExposeDefaultServer)($token);
         }
     }
