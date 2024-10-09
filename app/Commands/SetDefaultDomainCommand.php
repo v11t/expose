@@ -5,7 +5,7 @@ namespace App\Commands;
 use App\Client\Support\DefaultDomainNodeVisitor;
 use App\Client\Support\DefaultServerNodeVisitor;
 use App\Client\Support\InsertDefaultDomainNodeVisitor;
-use App\Commands\Plugins\SetUpExposeDefaultDomain;
+use App\Commands\SetUpExposeDefaultDomain;
 use Illuminate\Console\Command;
 use PhpParser\Lexer\Emulative;
 use PhpParser\Node;
