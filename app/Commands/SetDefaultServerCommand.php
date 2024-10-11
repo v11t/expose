@@ -4,6 +4,7 @@ namespace App\Commands;
 
 use App\Client\Support\DefaultServerNodeVisitor;
 use App\Client\Support\InsertDefaultServerNodeVisitor;
+use App\Commands\Concerns\RendersBanner;
 use App\Commands\SetUpExposeDefaultServer;
 use Illuminate\Console\Command;
 use PhpParser\Lexer\Emulative;
@@ -19,6 +20,8 @@ use function Termwind\render;
 
 class SetDefaultServerCommand extends Command
 {
+    use RendersBanner;
+
     protected $signature = 'default-server {server?}';
 
     protected $description = 'Set or retrieve the default server to use with Expose.';
@@ -54,7 +57,7 @@ class SetDefaultServerCommand extends Command
             return;
         }
 
-        render('<div class="ml-2 text-pink-500 font-bold"><span class="pr-0.5">></span> Expose</div>');
+        $this->renderBanner();
 
         if (is_null($server = config('expose.default_server'))) {
             render('<div class="ml-3 px-2 text-orange-600 bg-orange-100">There is no default server specified.</div>');
