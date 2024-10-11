@@ -78,9 +78,7 @@ class InfoCommand extends Command implements FetchesPlatformDataContract
     }
 
     protected function getVersion(): string {
-        Artisan::call("help --version");
-        $version = Artisan::output();
-        return 'v'.str()->after($version, "Expose ");
+        return 'v'.config('app.version');
     }
 
     public function getToken()
