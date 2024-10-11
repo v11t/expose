@@ -115,11 +115,11 @@ trait FetchesPlatformData
 
     protected function platformEndpoint(): string
     {
-        return config('expose.platform_endpoint') . '/api/';
+        return config('expose.platform_url') . '/api/';
     }
 
     protected function exposePlatformSetup()
     {
-        return config('expose.platform_endpoint') !== null && config('expose.platform_endpoint') !== "";
+        return config('expose.platform_url') !== null && config('expose.platform_url') !== "";
     }
 }
