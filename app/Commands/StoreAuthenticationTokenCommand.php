@@ -3,6 +3,7 @@
 namespace App\Commands;
 
 use App\Client\Support\TokenNodeVisitor;
+use App\Commands\Concerns\RendersBanner;
 use App\Commands\SetupExposeProToken;
 use Illuminate\Console\Command;
 use PhpParser\Lexer\Emulative;
@@ -15,6 +16,8 @@ use function Termwind\render;
 
 class StoreAuthenticationTokenCommand extends Command
 {
+    use RendersBanner;
+
     protected $signature = 'token {token?} {--clean}';
 
     protected $description = 'Set the authentication token to use with Expose.';
@@ -46,7 +49,7 @@ class StoreAuthenticationTokenCommand extends Command
 
         if (!$this->option('no-interaction')) {
 
-            render('<div class="ml-2 text-pink-500 font-bold"><span class="pr-0.5">></span> Expose</div>');
+            $this->renderBanner();
             render("<div class='ml-3'>Setting up new Expose token <span class='font-bold'>$token</span>...</div>");
 
             (new SetupExposeProToken)($token);
