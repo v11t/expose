@@ -17,7 +17,7 @@ class WebHookConnectionCallback
 
     public function handle(ControlConnection $connection)
     {
-        $this->browser->post(config('expose.admin.connection_callbacks.webhook.url'), [
+        $this->browser->post(config('expose.connection_callbacks.webhook.url'), [
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
             'X-Signature' => $this->generateWebhookSigningSecret($connection),
@@ -26,6 +26,6 @@ class WebHookConnectionCallback
 
     protected function generateWebhookSigningSecret(ControlConnection $connection)
     {
-        return hash_hmac('sha256', $connection->client_id, config('expose.admin.connection_callbacks.webhook.secret'));
+        return hash_hmac('sha256', $connection->client_id, config('expose.connection_callbacks.webhook.secret'));
     }
 }
