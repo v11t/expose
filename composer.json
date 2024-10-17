@@ -78,8 +78,8 @@
             "url": "https://github.com/beyondcode/cuzzle"
         },
         {
-            "type": "path",
-            "url": "../expose-common"
+            "type": "git",
+            "url": "https://github.com/beyondcode/expose-common"
         }
     ],
     "minimum-stability": "dev",
