@@ -183,6 +183,7 @@ return [
     'platform_url' => 'https://expose.dev',
 
     'request_plugins' => [
-        App\Logger\Plugins\PaddleBillingPlugin::class
+        App\Logger\Plugins\PaddleBillingPlugin::class,
+        \App\Logger\Plugins\GitHubPlugin::class
     ]
 ];
