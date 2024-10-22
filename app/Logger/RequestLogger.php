@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Logger;
+namespace Expose\Client\Logger;
 
 use Laminas\Http\Request;
 use Laminas\Http\Response;

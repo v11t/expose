@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Commands;
+namespace Expose\Client\Commands;
 
-use App\Client\Factory;
-use App\Commands\Concerns\RendersBanner;
+use Expose\Client\Commands\Concerns\RendersBanner;
+use Expose\Client\Factory;
 use Illuminate\Support\Str;
 use React\EventLoop\LoopInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use function Termwind\render;
 
 class ShareCommand extends ServerAwareCommand
