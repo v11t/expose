@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Commands;
+namespace Expose\Client\Commands;
 
-use App\Commands\Concerns\RendersBanner;
-use App\Commands\Concerns\RendersLineTable;
-use App\Contracts\FetchesPlatformDataContract;
-use App\Traits\FetchesPlatformData;
+use Expose\Client\Commands\Concerns\RendersBanner;
+use Expose\Client\Commands\Concerns\RendersLineTable;
+use Expose\Client\Contracts\FetchesPlatformDataContract;
+use Expose\Client\Traits\FetchesPlatformData;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;

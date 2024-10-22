@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Commands;
+namespace Expose\Client\Commands;
 
-use App\Client\Exceptions\InvalidServerProvided;
-use App\Logger\CliRequestLogger;
+use Expose\Client\Exceptions\InvalidServerProvided;
+use Expose\Client\Logger\CliRequestLogger;
 use Illuminate\Console\Parser;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;

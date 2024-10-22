@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Client\Support;
+namespace Expose\Client\Support;
 
 use PhpParser\Node;
 use PhpParser\Node\Scalar\String_;

@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Client;
+namespace Expose\Client;
 
-use App\Client\Http\Controllers\ClearLogsController;
-use App\Client\Http\Controllers\CreateTunnelController;
-use App\Client\Http\Controllers\DashboardController;
-use App\Client\Http\Controllers\GetTunnelsController;
-use App\Client\Http\Controllers\LogController;
-use App\Client\Http\Controllers\PushLogsToDashboardController;
-use App\Client\Http\Controllers\ReplayLogController;
-use App\Http\App;
-use App\Http\ClientRouteGenerator;
-use App\WebSockets\Socket;
+use Expose\Client\Http\App;
+use Expose\Client\Http\ClientRouteGenerator;
+use Expose\Client\Http\Controllers\ClearLogsController;
+use Expose\Client\Http\Controllers\CreateTunnelController;
+use Expose\Client\Http\Controllers\DashboardController;
+use Expose\Client\Http\Controllers\GetTunnelsController;
+use Expose\Client\Http\Controllers\LogController;
+use Expose\Client\Http\Controllers\PushLogsToDashboardController;
+use Expose\Client\Http\Controllers\ReplayLogController;
+use Expose\Client\WebSockets\Socket;
 use Ratchet\WebSocket\WsServer;
 use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;

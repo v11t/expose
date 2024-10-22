@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Client\Exceptions;
+namespace Expose\Client\Exceptions;
 
 class InvalidServerProvided extends \Exception
 {

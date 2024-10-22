@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Client\Http\Controllers;
+namespace Expose\Client\Http\Controllers;
 
-use App\Client\Client;
+use Expose\Client\Client;
 use Expose\Common\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Ratchet\ConnectionInterface;

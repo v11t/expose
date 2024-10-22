@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Client\Support;
+namespace Expose\Client\Support;
 
 use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 use Symfony\Component\Console\Helper\Helper;

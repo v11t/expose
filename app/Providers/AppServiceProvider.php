@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Providers;
+namespace Expose\Client\Providers;
 
-use App\Logger\CliRequestLogger;
-use App\Logger\RequestLogger;
+use Expose\Client\Logger\CliRequestLogger;
+use Expose\Client\Logger\RequestLogger;
 use Illuminate\Support\ServiceProvider;
 use Laminas\Uri\Uri;
 use Laminas\Uri\UriFactory;

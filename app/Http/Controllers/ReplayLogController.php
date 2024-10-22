@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Client\Http\Controllers;
+namespace Expose\Client\Http\Controllers;
 
-use App\Client\Http\HttpClient;
+use Expose\Client\Http\HttpClient;
+use Expose\Client\Logger\RequestLogger;
 use Expose\Common\Http\Controllers\Controller;
-use App\Logger\RequestLogger;
 use GuzzleHttp\Psr7\Message;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;

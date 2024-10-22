@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Commands;
+namespace Expose\Client\Commands;
 
 
-use App\Contracts\FetchesPlatformDataContract;
-use App\Traits\FetchesPlatformData;
+use Expose\Client\Contracts\FetchesPlatformDataContract;
+use Expose\Client\Traits\FetchesPlatformData;
 use Illuminate\Support\Facades\Artisan;
 
 use function Laravel\Prompts\select;
