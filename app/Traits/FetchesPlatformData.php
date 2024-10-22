@@ -1,6 +1,6 @@
 <?php
 
-namespace Expose\Client\Traits;
+namespace App\Traits;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;

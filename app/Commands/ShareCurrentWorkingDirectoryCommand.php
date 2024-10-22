@@ -1,6 +1,6 @@
 <?php
 
-namespace Expose\Client\Commands;
+namespace App\Commands;
 
 class ShareCurrentWorkingDirectoryCommand extends ShareCommand
 {

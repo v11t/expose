@@ -1,9 +1,9 @@
 <?php
 
-namespace Expose\Client\Commands;
+namespace App\Commands;
 
-use Expose\Client\Contracts\FetchesPlatformDataContract;
-use Expose\Client\Traits\FetchesPlatformData;
+use App\Contracts\FetchesPlatformDataContract;
+use App\Traits\FetchesPlatformData;
 use Illuminate\Support\Facades\Artisan;
 
 class SetUpExposeProToken implements FetchesPlatformDataContract

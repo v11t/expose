@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Client;
 
-use Expose\Client\Client;
-use Expose\Client\Configuration;
-use Expose\Client\Factory;
-use Expose\Client\Logger\RequestLogger;
+use App\Client\Client;
+use App\Client\Configuration;
+use App\Client\Factory;
+use App\Logger\RequestLogger;
 use Psr\Http\Message\ResponseInterface;
 use React\Http\Browser;
 use Tests\Feature\TestCase;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Expose\Client\Commands\Concerns;
+namespace App\Commands\Concerns;
 
 use function Termwind\render;
 

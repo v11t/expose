@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use Expose\Client\Logger\CliRequestLogger;
-use Expose\Client\Logger\RequestLogger;
+use App\Logger\CliRequestLogger;
+use App\Logger\RequestLogger;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Laminas\Http\Request as LaminasRequest;

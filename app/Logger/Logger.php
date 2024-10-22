@@ -1,6 +1,6 @@
 <?php
 
-namespace Expose\Client\Logger;
+namespace App\Logger;
 
 use Illuminate\Console\Concerns\InteractsWithIO;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;

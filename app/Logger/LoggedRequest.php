@@ -1,6 +1,6 @@
 <?php
 
-namespace Expose\Client\Logger;
+namespace App\Logger;
 
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Message;

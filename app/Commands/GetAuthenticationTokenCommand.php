@@ -1,8 +1,8 @@
 <?php
 
-namespace Expose\Client\Commands;
+namespace App\Commands;
 
-use Expose\Client\Commands\Concerns\RendersBanner;
+use App\Commands\Concerns\RendersBanner;
 use Illuminate\Console\Command;
 
 use function Termwind\render;

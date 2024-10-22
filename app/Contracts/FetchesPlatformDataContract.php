@@ -1,6 +1,6 @@
 <?php
 
-namespace Expose\Client\Contracts;
+namespace App\Contracts;
 
 interface FetchesPlatformDataContract
 {
