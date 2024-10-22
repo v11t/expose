@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Client\Http\Controllers;
+namespace Expose\Client\Http\Controllers;
 
 use Expose\Common\Http\Controllers\Controller;
 use GuzzleHttp\Psr7\Message;

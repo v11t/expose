@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Commands;
+namespace Expose\Client\Commands;
 
-use App\Commands\Concerns\RendersBanner;
-use App\Commands\Concerns\RendersLineTable;
+use Expose\Client\Commands\Concerns\RendersBanner;
+use Expose\Client\Commands\Concerns\RendersLineTable;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 

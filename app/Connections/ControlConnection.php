@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Client\Connections;
+namespace Expose\Client\Connections;
 
-use App\Client\ProxyManager;
+use Expose\Client\ProxyManager;
 use Evenement\EventEmitterTrait;
 use Ratchet\Client\WebSocket;
 use Ratchet\ConnectionInterface;

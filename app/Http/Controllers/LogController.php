@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Client\Http\Controllers;
+namespace Expose\Client\Http\Controllers;
 
+use Expose\Client\Logger\RequestLogger;
 use Expose\Common\Http\Controllers\Controller;
-use App\Logger\RequestLogger;
 use Illuminate\Http\Request;
 use Ratchet\ConnectionInterface;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Client;
+namespace Expose\Client;
 
 class Configuration
 {
