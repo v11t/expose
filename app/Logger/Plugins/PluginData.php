@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Logger\Plugins;
+namespace Expose\Client\Logger\Plugins;
 
 class PluginData
 {

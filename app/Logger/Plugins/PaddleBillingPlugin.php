@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Logger\Plugins;
+namespace Expose\Client\Logger\Plugins;
 
 use Exception;
 

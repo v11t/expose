@@ -173,17 +173,10 @@ return [
         'size' => '1MB',
     ],
 
-    'connection_callbacks' => [
-        'webhook' => [
-            'url' => null,
-            'secret' => null,
-        ],
-    ],
-
     'platform_url' => 'https://expose.dev',
 
     'request_plugins' => [
-        \App\Logger\Plugins\PaddleBillingPlugin::class,
-        \App\Logger\Plugins\GitHubPlugin::class
+        \Expose\Client\Logger\Plugins\PaddleBillingPlugin::class,
+        \Expose\ClientLogger\Plugins\GitHubPlugin::class
     ]
 ];

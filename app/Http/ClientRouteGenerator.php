@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http;
+namespace Expose\Client\Http;
 
-use App\Client\Http\Controllers\FileController;
+use Expose\Client\Http\Controllers\FileController;
 use Expose\Common\Http\RouteGenerator;
 use Symfony\Component\Routing\Route;
 

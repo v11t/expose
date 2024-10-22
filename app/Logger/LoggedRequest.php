@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Logger;
+namespace Expose\Client\Logger;
 
-use App\Logger\Concerns\PluginAware;
-use App\Logger\Plugins\PluginData;
+use Expose\Client\Logger\Concerns\PluginAware;
+use Expose\Client\Logger\Plugins\PluginData;
 use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Psr7\Message;

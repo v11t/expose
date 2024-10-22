@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Logger;
+namespace Expose\Client\Logger;
 
-use App\Client\Support\ConsoleSectionOutput;
+use Expose\Client\Support\ConsoleSectionOutput;
 use Illuminate\Support\Collection;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Terminal;
-
 use function Termwind\render;
 use function Termwind\terminal;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Logger\Plugins;
+namespace Expose\Client\Logger\Plugins;
 
-use App\Logger\LoggedRequest;
+use Expose\Client\Logger\LoggedRequest;
 
 abstract class BasePlugin
 {

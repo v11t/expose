@@ -1,17 +1,15 @@
 <?php
 
-namespace App\Commands;
+namespace Expose\Client\Commands;
 
-use App\Client\Support\TokenNodeVisitor;
-use App\Commands\Concerns\RendersBanner;
-use App\Commands\SetupExposeProToken;
+use Expose\Client\Commands\Concerns\RendersBanner;
+use Expose\Client\Support\TokenNodeVisitor;
 use Illuminate\Console\Command;
 use PhpParser\Lexer\Emulative;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\CloningVisitor;
 use PhpParser\Parser\Php7;
 use PhpParser\PrettyPrinter\Standard;
-
 use function Termwind\render;
 
 class StoreAuthenticationTokenCommand extends Command
