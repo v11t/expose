@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Logger;
+namespace Expose\Client\Logger;
 
 use Illuminate\Support\Str;
 use Laminas\Http\Request;

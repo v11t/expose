@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Commands;
+namespace Expose\Client\Commands;
 
-use App\Commands\Concerns\RendersBanner;
+use Expose\Client\Commands\Concerns\RendersBanner;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use LaravelZero\Framework\Commands\Command;

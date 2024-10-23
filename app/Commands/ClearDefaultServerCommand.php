@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Commands;
+namespace Expose\Client\Commands;
 
-use App\Client\Support\ClearServerNodeVisitor;
-use App\Client\Support\InsertDefaultServerNodeVisitor;
-use App\Commands\Concerns\RendersBanner;
+use Expose\Client\Commands\Concerns\RendersBanner;
+use Expose\Client\Support\ClearServerNodeVisitor;
+use Expose\Client\Support\InsertDefaultServerNodeVisitor;
 use Illuminate\Console\Command;
 use PhpParser\Lexer\Emulative;
 use PhpParser\Node;
@@ -13,7 +13,6 @@ use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\CloningVisitor;
 use PhpParser\Parser\Php7;
 use PhpParser\PrettyPrinter\Standard;
-
 use function Termwind\render;
 
 class ClearDefaultServerCommand extends Command
