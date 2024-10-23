@@ -5,6 +5,7 @@ namespace Expose\Client\Commands;
 
 use Expose\Client\Contracts\FetchesPlatformDataContract;
 use Expose\Client\Traits\FetchesPlatformData;
+use Expose\Client\Commands\Concerns\RendersOutput;
 use Illuminate\Support\Facades\Artisan;
 
 use function Laravel\Prompts\select;
@@ -12,6 +13,7 @@ use function Termwind\render;
 
 class SetUpExposeDefaultDomain implements FetchesPlatformDataContract
 {
+    use RendersOutput;
     use FetchesPlatformData;
 
     protected string $token;
@@ -46,7 +48,7 @@ class SetUpExposeDefaultDomain implements FetchesPlatformDataContract
             }
 
             else {
-                render('<div class="ml-3 px-2 text-orange-600 bg-orange-100">No custom domains found. You can add custom domains in the Expose dashboard.</div>');
+                $this->renderWarning('No custom domains found. You can add custom domains in the Expose dashboard.');
             }
         }
         else {
