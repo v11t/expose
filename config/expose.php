@@ -175,6 +175,16 @@ return [
 
     'platform_url' => 'https://expose.dev',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Request Plugins
+    |--------------------------------------------------------------------------
+    |
+    | Request plugins analyze the incoming HTTP request and extract certain
+    | data of interest to show in the CLI or UI, for example which event
+    | was sent by a billing provider or a webhook from a service like GitHub.
+    |
+    */
     'request_plugins' => [
         \Expose\Client\Logger\Plugins\PaddleBillingPlugin::class,
         \Expose\ClientLogger\Plugins\GitHubPlugin::class
