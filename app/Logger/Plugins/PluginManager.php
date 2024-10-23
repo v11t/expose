@@ -2,6 +2,7 @@
 
 namespace Expose\Client\Logger\Plugins;
 
+use Expose\Client\Logger\LoggedRequest;
 use Expose\Client\Support\InsertRequestPluginsNodeVisitor;
 use Expose\Client\Support\RequestPluginsNodeVisitor;
 use PhpParser\Lexer\Emulative;
@@ -16,6 +17,8 @@ class PluginManager
 {
     protected ?array $defaultPlugins = null;
     protected ?array $customPlugins = null;
+
+    protected ?array $pluginConfig = null;
 
     public function __construct()
     {
@@ -39,14 +42,11 @@ class PluginManager
         return array_merge($this->defaultPlugins, $this->customPlugins);
     }
 
-    public function loadPluginData(): ?PluginData // TODO
+    public function loadPluginData(LoggedRequest $loggedRequest): ?PluginData
     {
-        $this->loadCustomPlugins();
-        $this->ensureValidPluginConfig();
-
-        foreach (config('expose.request_plugins') as $pluginClass) {
+        foreach ($this->pluginConfig as $pluginClass) {
             try {
-                $plugin = $pluginClass::make($this);
+                $plugin = $pluginClass::make($loggedRequest);
 
                 if ($plugin->matchesRequest()) {
                     return $plugin->getPluginData();
@@ -60,17 +60,16 @@ class PluginManager
 
     protected function ensureValidPluginConfig(): void
     {
-        foreach (config('expose.request_plugins') as $pluginClass) {
+        $this->pluginConfig = config('expose.request_plugins');
+
+        foreach ($this->pluginConfig as $pluginClass) {
             // Remove invalid plugins from the configuration
             if (!class_exists($pluginClass) || !is_subclass_of($pluginClass, BasePlugin::class)) {
-                $configPlugins = config('expose.request_plugins');
-
-                if (in_array($pluginClass, $configPlugins)) {
-                    $configPlugins = array_diff($configPlugins, [$pluginClass]);
-                    config(['expose.request_plugins' => $configPlugins]);
-                }
+                $this->pluginConfig = array_diff($this->pluginConfig, [$pluginClass]);
             }
         }
+
+        config(['expose.request_plugins' => $this->pluginConfig]);
     }
 
     protected function loadCustomPlugins(): array
