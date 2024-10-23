@@ -3,6 +3,7 @@
 namespace Expose\Client\Providers;
 
 use Expose\Client\Logger\CliRequestLogger;
+use Expose\Client\Logger\Plugins\PluginManager;
 use Expose\Client\Logger\RequestLogger;
 use Illuminate\Support\ServiceProvider;
 use Laminas\Uri\Uri;
@@ -27,6 +28,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(LoopInterface::class, function () {
             return Loop::get();
+        });
+
+        $this->app->singleton(PluginManager::class, function () {
+            return new PluginManager;
         });
 
         $this->app->bind(Browser::class, function ($app) {
