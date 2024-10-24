@@ -2,11 +2,9 @@
 
 namespace Expose\Client\Commands;
 
-use Expose\Client\Commands\Concerns\RendersBanner;
-use Expose\Client\Commands\Concerns\RendersOutput;
+
 use Expose\Client\Support\DefaultServerNodeVisitor;
 use Expose\Client\Support\InsertDefaultServerNodeVisitor;
-use Expose\Client\Commands\SetUpExposeDefaultServer;
 use Illuminate\Console\Command;
 use PhpParser\Lexer\Emulative;
 use PhpParser\Node;
@@ -15,12 +13,14 @@ use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\CloningVisitor;
 use PhpParser\Parser\Php7;
 use PhpParser\PrettyPrinter\Standard;
+
+use function Expose\Common\banner;
+use function Expose\Common\info;
+use function Expose\Common\warning;
 use function Laravel\Prompts\confirm;
-use function Termwind\render;
 
 class SetDefaultServerCommand extends Command
 {
-    use RendersBanner, RendersOutput;
 
     protected $signature = 'default-server {server?}';
 
@@ -32,7 +32,7 @@ class SetDefaultServerCommand extends Command
 
         if (! is_null($server)) {
 
-            render("<div class='ml-3'>✔ Set Expose default server to <span class='font-bold'>$server</span>.</div>");
+            info("✔ Set Expose default server to <span class='font-bold'>$server</span>.");
 
             $configFile = implode(DIRECTORY_SEPARATOR, [
                 $_SERVER['HOME'] ?? $_SERVER['USERPROFILE'],
@@ -57,12 +57,12 @@ class SetDefaultServerCommand extends Command
             return;
         }
 
-        $this->renderBanner();
+        banner();
 
         if (is_null($server = config('expose.default_server'))) {
-            $this->renderWarning('There is no default server specified.');
+            warning('There is no default server specified.');
         } else {
-            render("<div class='ml-3'>Current default server: <span class='font-bold'>$server</span>.</div>");
+            info("Current default server: <span class='font-bold'>$server</span>.");
         }
 
 

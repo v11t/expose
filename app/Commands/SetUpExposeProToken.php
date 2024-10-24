@@ -22,7 +22,6 @@ class SetUpExposeProToken implements FetchesPlatformDataContract
         if ($this->isProToken() && $this->hasTeamDomains()) {
             return (new SetUpExposeDefaultDomain)($token);
         } else {
-            Artisan::call("default-domain:clear --no-interaction");
             return (new SetUpExposeDefaultServer)($token);
         }
     }

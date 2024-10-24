@@ -7,6 +7,8 @@ use Expose\Client\Contracts\FetchesPlatformDataContract;
 use Expose\Client\Traits\FetchesPlatformData;
 use Illuminate\Support\Facades\Artisan;
 
+use function Expose\Common\info;
+use function Expose\Common\headline;
 use function Laravel\Prompts\select;
 use function Termwind\render;
 
@@ -25,22 +27,23 @@ class SetUpExposeDefaultServer implements FetchesPlatformDataContract
         $closestServer = null;
         $servers = collect();
 
-        render('<div class="mt-1 ml-3 font-bold">Default Server</div>');
+        headline('Default Server');
 
         if ($this->isProToken()) {
             $servers = $this->getServers();
             $closestServer = $this->getClosestServer();
 
-            render('<div class="ml-3 mb-1">This token has access to our high-performance, global server network.</div>');
+            info('This token has access to our high-performance, global server network.');
         } else {
-            render('<div class="ml-3 mb-1">The free license is limited to the <span class="font-bold">free server (Region: Europe)</span>.
-            To access our high-performance, global server network, upgrade to <a href="https://expose.dev/go-pro">Expose Pro</a>.</div>');
+            info('The free license is limited to the <span class="font-bold">free server (Region: Europe)</span>.
+            To access our high-performance, global server network, upgrade to <a href="https://expose.dev/go-pro">Expose Pro</a>.');
 
             Artisan::call("default-server free");
             render(Artisan::output());
         }
 
         if ($servers->isNotEmpty()) {
+            info();
             $server = select(
                 label: 'What default server would you like to use?',
                 options: $servers->mapWithKeys(function ($server) {

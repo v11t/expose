@@ -2,7 +2,7 @@
 
 namespace Expose\Client\Commands;
 
-use Expose\Client\Commands\Concerns\RendersBanner;
+
 use Expose\Client\Support\ClearDomainNodeVisitor;
 use Expose\Client\Support\InsertDefaultDomainNodeVisitor;
 use Illuminate\Console\Command;
@@ -13,11 +13,14 @@ use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\CloningVisitor;
 use PhpParser\Parser\Php7;
 use PhpParser\PrettyPrinter\Standard;
-use function Termwind\render;
+
+use function Expose\Common\banner;
+use function Expose\Common\info;
+
 
 class ClearDefaultDomainCommand extends Command
 {
-    use RendersBanner;
+
 
     protected $signature = 'default-domain:clear';
 
@@ -42,8 +45,8 @@ class ClearDefaultDomainCommand extends Command
         file_put_contents($configFile, $updatedConfigFile);
 
         if(!$this->option('no-interaction')) {
-            $this->renderBanner();
-            render("<div class='ml-3'>✔ Cleared the Expose default domain.</div>");
+            banner();
+            info("✔ Cleared the Expose default domain.");
         }
     }
 

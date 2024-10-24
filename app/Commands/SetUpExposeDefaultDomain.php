@@ -5,15 +5,17 @@ namespace Expose\Client\Commands;
 
 use Expose\Client\Contracts\FetchesPlatformDataContract;
 use Expose\Client\Traits\FetchesPlatformData;
-use Expose\Client\Commands\Concerns\RendersOutput;
+
 use Illuminate\Support\Facades\Artisan;
 
+use function Expose\Common\warning;
+use function Expose\Common\info;
+use function Expose\Common\headline;
 use function Laravel\Prompts\select;
-use function Termwind\render;
 
 class SetUpExposeDefaultDomain implements FetchesPlatformDataContract
 {
-    use RendersOutput;
+
     use FetchesPlatformData;
 
     protected string $token;
@@ -24,13 +26,14 @@ class SetUpExposeDefaultDomain implements FetchesPlatformDataContract
 
         $this->token = $token;
 
-        render('<div class="ml-3 mt-1 font-bold">Default Domain</div>');
-        render('<div class="ml-3">Use your teams custom whitelabel domains for easier subdomain management and better links.</div>');
+        headline('Default Domain');
+        info('Use your teams custom whitelabel domains for easier subdomain management and better links.');
 
         if ($this->isProToken()) {
             $domains = $this->getTeamDomains();
 
             if ($domains->isNotEmpty()) {
+                info();
                 $domain = select(
                     label: 'What default domain would you like to use?',
                     options: $domains->mapWithKeys(function ($domain) {
@@ -48,11 +51,11 @@ class SetUpExposeDefaultDomain implements FetchesPlatformDataContract
             }
 
             else {
-                $this->renderWarning('No custom domains found. You can add custom domains in the Expose dashboard.');
+                warning('No custom domains found. You can add custom domains in the Expose dashboard.');
             }
         }
         else {
-            render('<div class="ml-3 mb-1">To access to custom domains, upgrade to <a href="https://expose.dev">Expose Pro</a>.');
+            info('To access to custom domains, upgrade to <a href="https://expose.dev">Expose Pro</a>.');
         }
     }
 

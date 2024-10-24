@@ -2,7 +2,7 @@
 
 namespace Expose\Client\Commands;
 
-use Expose\Client\Commands\Concerns\RendersBanner;
+
 use Expose\Client\Support\TokenNodeVisitor;
 use Illuminate\Console\Command;
 use PhpParser\Lexer\Emulative;
@@ -10,11 +10,12 @@ use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\CloningVisitor;
 use PhpParser\Parser\Php7;
 use PhpParser\PrettyPrinter\Standard;
-use function Termwind\render;
+
+use function Expose\Common\banner;
+use function Expose\Common\info;
 
 class StoreAuthenticationTokenCommand extends Command
 {
-    use RendersBanner;
 
     protected $signature = 'token {token?} {--clean}';
 
@@ -47,17 +48,15 @@ class StoreAuthenticationTokenCommand extends Command
 
         if (!$this->option('no-interaction')) {
 
-            $this->renderBanner();
-            render("<div class='ml-3'>Setting up new Expose token <span class='font-bold'>$token</span>...</div>");
+            banner();
+            info("Setting up new Expose token <span class='font-bold'>$token</span>...");
 
             (new SetupExposeProToken)($token);
         }
         else {
-            $this->line("Token set to $token.");
+            info("Token set to $token.");
         }
 
-
-        return;
     }
 
     protected function rememberPreviousSetup() {
