@@ -70,7 +70,7 @@ class PluginManager
 
     protected function ensureValidPluginConfig(): void
     {
-        $this->pluginConfig = config('expose.request_plugins');
+        $this->pluginConfig = config('expose.request_plugins', []);
 
         foreach ($this->pluginConfig as $pluginClass) {
             // Remove invalid plugins from the configuration
