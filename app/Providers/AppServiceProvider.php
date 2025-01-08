@@ -3,6 +3,7 @@
 namespace Expose\Client\Providers;
 
 use Expose\Client\Logger\CliRequestLogger;
+use Expose\Client\Logger\DatabaseRequestLogger;
 use Expose\Client\Logger\Plugins\PluginManager;
 use Expose\Client\Logger\RequestLogger;
 use Illuminate\Support\ServiceProvider;
@@ -39,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(RequestLogger::class, function ($app) {
-            return new RequestLogger($app->make(Browser::class), $app->make(CliRequestLogger::class));
+            return new RequestLogger($app->make(Browser::class), $app->make(CliRequestLogger::class), $app->make(DatabaseRequestLogger::class));
         });
     }
 

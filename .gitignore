@@ -9,3 +9,4 @@ database/expose.db
 .expose.php
 .env
 .box_dump
+/database/database.sqlite
