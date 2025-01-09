@@ -37,7 +37,7 @@ return [
             'database' => implode(DIRECTORY_SEPARATOR, [
                 $_SERVER['HOME'] ?? $_SERVER['USERPROFILE'] ?? __DIR__,
                 '.expose',
-                'database.sqlite',
+                'expose-client.sqlite',
             ]),
 
             'prefix' => '',
