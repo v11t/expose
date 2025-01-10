@@ -15,6 +15,7 @@ use Expose\Client\Http\Controllers\ReplayLogController;
 use Expose\Client\WebSockets\Socket;
 use Expose\Client\Http\Controllers\ReplayModifiedLogController;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Ratchet\WebSocket\WsServer;
 use React\EventLoop\Loop;
@@ -187,10 +188,26 @@ class Factory
         $this->loop->run();
     }
 
+    protected function createDatabase(): void
+    {
+        $databasePath = tempnam(sys_get_temp_dir(), 'expose-client-');
+        File::put($databasePath, '');
+
+        config()->set('database.default', 'sqlite');
+        config()->set('database.connections.sqlite.database', $databasePath);
+        dump("Database created at $databasePath");
+
+        DB::purge('sqlite'); // Purges the current connection, forcing it to re-bind
+        DB::reconnect('sqlite');
+    }
 
     protected function migrateDatabase()
     {
+        $this->createDatabase();
+
+        dump(config('database.connections.sqlite'));
         Artisan::call('migrate', [
+            '--database' => 'sqlite',
             '--force' => true, // necessary flag to run in PHAR
         ]);
 
