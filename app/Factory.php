@@ -2,6 +2,7 @@
 
 namespace Expose\Client;
 
+use Expose\Client\Contracts\LogStorageContract;
 use Expose\Client\Http\App;
 use Expose\Client\Http\ClientRouteGenerator;
 use Expose\Client\Http\Controllers\ClearLogsController;
@@ -114,9 +115,7 @@ class Factory
 
         $this->bindProxyManager();
 
-        $this
-            ->ensureDatabaseExists()
-            ->migrateDatabase();
+        $this->migrateDatabase();
 
         return $this;
     }
@@ -188,16 +187,6 @@ class Factory
         $this->loop->run();
     }
 
-    protected function ensureDatabaseExists()
-    {
-        $databasePath = config('database.connections.sqlite.database');
-
-        if (!file_exists($databasePath)) {
-            File::put($databasePath, '');
-        }
-
-        return $this;
-    }
 
     protected function migrateDatabase()
     {

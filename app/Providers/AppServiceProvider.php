@@ -8,6 +8,7 @@ use Expose\Client\Logger\DatabaseLogger;
 use Expose\Client\Logger\FrontendLogger;
 use Expose\Client\Logger\Plugins\PluginManager;
 use Expose\Client\Logger\RequestLogger;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Laminas\Uri\Uri;
 use Laminas\Uri\UriFactory;
@@ -42,6 +43,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(LogStorageContract::class, function ($app) {
+            $this->createDatabase();
             return new DatabaseLogger();
         });
 
@@ -86,5 +88,14 @@ class AppServiceProvider extends ServiceProvider
     protected function setMemoryLimit()
     {
         ini_set('memory_limit', config()->get('expose.memory_limit', '128M'));
+    }
+
+    protected function createDatabase(): void {
+        $databasePath = tempnam(sys_get_temp_dir(), 'expose-client-');
+
+        File::put($databasePath, '');
+
+        config()->set('database.default', 'sqlite');
+        config()->set('database.connections.sqlite.database', $databasePath);
     }
 }
