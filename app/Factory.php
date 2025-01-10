@@ -2,14 +2,14 @@
 
 namespace Expose\Client;
 
-use Expose\Client\Contracts\LogStorageContract;
 use Expose\Client\Http\App;
 use Expose\Client\Http\ClientRouteGenerator;
 use Expose\Client\Http\Controllers\ClearLogsController;
 use Expose\Client\Http\Controllers\CreateTunnelController;
 use Expose\Client\Http\Controllers\DashboardController;
 use Expose\Client\Http\Controllers\GetTunnelsController;
-use Expose\Client\Http\Controllers\LogController;
+use Expose\Client\Http\Controllers\GetLogController;
+use Expose\Client\Http\Controllers\GetLogsController;
 use Expose\Client\Http\Controllers\PushLogsToDashboardController;
 use Expose\Client\Http\Controllers\ReplayLogController;
 use Expose\Client\WebSockets\Socket;
@@ -143,7 +143,8 @@ class Factory
 
         $this->router->get('/api/tunnels', GetTunnelsController::class);
         $this->router->post('/api/tunnel', CreateTunnelController::class);
-        $this->router->get('/api/logs', LogController::class);
+        $this->router->get('/api/logs', GetLogsController::class);
+        $this->router->get('/api/log/{log}', GetLogController::class);
         $this->router->post('/api/logs', PushLogsToDashboardController::class);
         $this->router->get('/api/replay/{log}', ReplayLogController::class);
         $this->router->post('/api/replay-modified', ReplayModifiedLogController::class);
@@ -195,7 +196,6 @@ class Factory
 
         config()->set('database.default', 'sqlite');
         config()->set('database.connections.sqlite.database', $databasePath);
-        dump("Database created at $databasePath");
 
         DB::purge('sqlite'); // Purges the current connection, forcing it to re-bind
         DB::reconnect('sqlite');
@@ -205,7 +205,6 @@ class Factory
     {
         $this->createDatabase();
 
-        dump(config('database.connections.sqlite'));
         Artisan::call('migrate', [
             '--database' => 'sqlite',
             '--force' => true, // necessary flag to run in PHAR
