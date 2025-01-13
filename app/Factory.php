@@ -12,6 +12,7 @@ use Expose\Client\Http\Controllers\GetLogController;
 use Expose\Client\Http\Controllers\GetLogsController;
 use Expose\Client\Http\Controllers\PushLogsToDashboardController;
 use Expose\Client\Http\Controllers\ReplayLogController;
+use Expose\Client\Http\Controllers\SearchLogsController;
 use Expose\Client\WebSockets\Socket;
 use Expose\Client\Http\Controllers\ReplayModifiedLogController;
 use Illuminate\Support\Facades\Artisan;
@@ -145,6 +146,7 @@ class Factory
         $this->router->post('/api/tunnel', CreateTunnelController::class);
         $this->router->get('/api/logs', GetLogsController::class);
         $this->router->get('/api/log/{log}', GetLogController::class);
+        $this->router->post('/api/logs/search', SearchLogsController::class);
         $this->router->post('/api/logs', PushLogsToDashboardController::class);
         $this->router->get('/api/replay/{log}', ReplayLogController::class);
         $this->router->post('/api/replay-modified', ReplayModifiedLogController::class);
