@@ -3,6 +3,7 @@
 namespace Expose\Client\Commands;
 
 
+use Expose\Client\Commands\Support\ValidateExposeToken;
 use Expose\Client\Support\TokenNodeVisitor;
 use Illuminate\Console\Command;
 use PhpParser\Lexer\Emulative;
@@ -29,6 +30,12 @@ class StoreAuthenticationTokenCommand extends Command
             return $this->call('token:get', ['--no-interaction' => $this->option('no-interaction')]);
         }
 
+        if (!$this->option('no-interaction')) {
+            banner();
+        }
+
+        (new ValidateExposeToken)($token);
+
         $this->rememberPreviousSetup();
 
         $configFile = implode(DIRECTORY_SEPARATOR, [
@@ -48,7 +55,6 @@ class StoreAuthenticationTokenCommand extends Command
 
         if (!$this->option('no-interaction')) {
 
-            banner();
             info("Setting up new Expose token <span class='font-bold'>$token</span>...");
 
             (new SetupExposeProToken)($token);

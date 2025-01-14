@@ -14,6 +14,7 @@ use React\EventLoop\LoopInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use function Expose\Common\banner;
+use function Expose\Common\error;
 use function Expose\Common\info;
 use function Termwind\render;
 
@@ -25,9 +26,13 @@ class ShareCommand extends ServerAwareCommand
 
     protected $description = 'Share a local url with a remote expose server';
 
+    protected ?bool $isWindows = null;
+
     public function handle()
     {
         banner();
+        $this->ensureEnvironmentSetup();
+
 
         $auth = $this->option('auth') ?? config('expose.auth_token', '');
         info("Using auth token: $auth", OutputInterface::VERBOSITY_VERBOSE);
@@ -122,5 +127,42 @@ class ShareCommand extends ServerAwareCommand
         $background = ($background ? 0 : 255);
 
         return sprintf("\x1b[%s;5;%sm%s\x1b[0m", $background, $color, $str);
+    }
+
+    protected function detectOperatingSystem(): void
+    {
+        $this->isWindows = strpos(php_uname('s'), 'Windows') !== false;
+    }
+
+    protected function ensureEnvironmentSetup(): void
+    {
+        if (!$this->isWindows()) {
+            return;
+        }
+        if (!$this->isWmicAvailable()) {
+            error('The "wmic" command is not available on this Windows machine.');
+            error(
+                'Please refer to the documentation for more information: https://expose.dev/docs/troubleshooting',
+                abort: true
+            );
+        }
+    }
+
+    protected function isWmicAvailable(): bool
+    {
+        $output = [];
+        $exitCode = 0;
+
+        exec('wmic /?', $output, $exitCode);
+
+        return $exitCode === 0;
+    }
+
+    protected function isWindows(): bool {
+        if($this->isWindows === null) {
+            $this->detectOperatingSystem();
+        }
+
+        return $this->isWindows;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Expose\Client\Traits;
 
+use Expose\Client\Commands\Support\ExposeToken;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -10,28 +11,41 @@ trait FetchesPlatformData
 {
     protected function isProToken(): bool
     {
+        return $this->exposeToken()->isPro();
+    }
+
+    protected function isValidToken(): bool
+    {
+        return $this->exposeToken()->isValid();
+    }
+
+    protected function exposeToken(): ExposeToken
+    {
         /* With the array driver, Laravel Zero holds the cache for one whole CLI execution,
          * which is very handy. */
-        return Cache::rememberForever('is_pro_token', function () {
-            $response = Http::post($this->platformEndpoint() . 'client/is-pro-token', [
-                'token' => $this->getToken()
-            ]);
+        return Cache::rememberForever('expose_token_' . $this->getToken(), function () {
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+            ])
+                ->post("{$this->platformEndpoint()}client/token", [
+                    'token' => $this->getToken(),
+                ]);
 
             if (!$response->ok()) {
-                return false;
+                return ExposeToken::invalid($this->getToken());
             }
 
-            $result = $response->json();
+            $data = $response->json('data');
 
-            if (!$result) {
-                return false;
+            if (!isset($data['is_valid'], $data['is_pro'])) {
+                return ExposeToken::invalid($this->getToken());
             }
 
-            if (array_key_exists("is_pro", $result) && $result["is_pro"] === true) {
-                return true;
-            }
-
-            return false;
+            return match ([$data['is_valid'], $data['is_pro']]) {
+                [true, true] => ExposeToken::pro($this->getToken()),
+                [true, false] => ExposeToken::valid($this->getToken()),
+                default => ExposeToken::invalid($this->getToken()),
+            };
         });
     }
 
