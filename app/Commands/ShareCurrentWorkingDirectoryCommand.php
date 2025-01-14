@@ -2,7 +2,10 @@
 
 namespace Expose\Client\Commands;
 
+use Illuminate\Support\Arr;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Yaml\Yaml;
+
 use function Expose\Common\info;
 
 class ShareCurrentWorkingDirectoryCommand extends ShareCommand
@@ -17,17 +20,39 @@ class ShareCurrentWorkingDirectoryCommand extends ShareCommand
     {
         $this->loadConfigurationFiles();
 
+        $yaml = $this->loadExposeYaml();
+
         $folderName = $this->detectName();
 
-        $host = $this->prepareSharedHost($folderName . '.' . $this->detectTld());
+        $host = Arr::get($yaml, 'local-url', $this->prepareSharedHost($folderName . '.' . $this->detectTld()));
 
         $this->input->setArgument('host', $host);
 
-        if (!$this->option('subdomain')) {
+        $subdomain = Arr::get($yaml, 'subdomain', $this->option('subdomain'));
+        
+        if (!$subdomain) {
             $this->input->setOption('subdomain', str_replace('.', '-', $folderName));
+        } else {
+            $this->input->setOption('subdomain', $subdomain);
         }
 
+        $this->input->setOption('domain', Arr::get($yaml, 'custom-domain', $this->option('domain')));
+        $this->input->setOption('server', Arr::get($yaml, 'expose-server', $this->option('server')));
+
+        $authString = Arr::get($yaml, 'auth.username') . ':' . Arr::get($yaml, 'auth.password');
+        $authString = empty($authString) ? $this->option('basicAuth') : $authString;
+        $this->input->setOption('basicAuth', $authString);
+
         parent::handle();
+    }
+
+    protected function loadExposeYaml(): array
+    {
+        try {
+            return Yaml::parseFile(getcwd() . DIRECTORY_SEPARATOR . 'expose.yml');
+        } catch (\Exception $e) {
+            return [];
+        }
     }
 
     protected function loadConfigurationFiles(): void
