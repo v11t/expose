@@ -39,6 +39,7 @@ declare interface RequestData {
     subdomains: string[];
     user: ExposeUser;
     max_logs: number;
+    local_url: string;
   }
 
   interface ExposeUser {
