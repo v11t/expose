@@ -4,5 +4,5 @@ namespace Expose\Client\Contracts;
 
 interface FetchesPlatformDataContract
 {
-    public function getToken();
+    public function getToken(): string;
 }

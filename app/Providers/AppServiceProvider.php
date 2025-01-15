@@ -2,9 +2,13 @@
 
 namespace Expose\Client\Providers;
 
-use Expose\Client\Logger\CliRequestLogger;
+use Expose\Client\Contracts\LogStorageContract;
+use Expose\Client\Logger\CliLogger;
+use Expose\Client\Logger\DatabaseLogger;
+use Expose\Client\Logger\FrontendLogger;
 use Expose\Client\Logger\Plugins\PluginManager;
 use Expose\Client\Logger\RequestLogger;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Laminas\Uri\Uri;
 use Laminas\Uri\UriFactory;
@@ -38,8 +42,12 @@ class AppServiceProvider extends ServiceProvider
             return new Browser($app->make(LoopInterface::class));
         });
 
+        $this->app->singleton(LogStorageContract::class, function ($app) {
+            return new DatabaseLogger();
+        });
+
         $this->app->singleton(RequestLogger::class, function ($app) {
-            return new RequestLogger($app->make(Browser::class), $app->make(CliRequestLogger::class));
+            return new RequestLogger($app->make(CliLogger::class), $app->make(FrontendLogger::class), $app->make(LogStorageContract::class));
         });
     }
 

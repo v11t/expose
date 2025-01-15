@@ -8,14 +8,23 @@ use Expose\Client\Http\Controllers\ClearLogsController;
 use Expose\Client\Http\Controllers\CreateTunnelController;
 use Expose\Client\Http\Controllers\DashboardController;
 use Expose\Client\Http\Controllers\GetTunnelsController;
-use Expose\Client\Http\Controllers\LogController;
+use Expose\Client\Http\Controllers\GetLogController;
+use Expose\Client\Http\Controllers\GetLogsController;
 use Expose\Client\Http\Controllers\PushLogsToDashboardController;
 use Expose\Client\Http\Controllers\ReplayLogController;
+use Expose\Client\Http\Controllers\SearchLogsController;
 use Expose\Client\WebSockets\Socket;
 use Expose\Client\Http\Controllers\ReplayModifiedLogController;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Ratchet\WebSocket\WsServer;
 use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\OutputInterface;
+use Termwind\Termwind;
+use function Expose\Common\info;
 
 class Factory
 {
@@ -110,6 +119,8 @@ class Factory
 
         $this->bindProxyManager();
 
+        $this->migrateDatabase();
+
         return $this;
     }
 
@@ -135,7 +146,9 @@ class Factory
 
         $this->router->get('/api/tunnels', GetTunnelsController::class);
         $this->router->post('/api/tunnel', CreateTunnelController::class);
-        $this->router->get('/api/logs', LogController::class);
+        $this->router->get('/api/logs', GetLogsController::class);
+        $this->router->get('/api/log/{log}', GetLogController::class);
+        $this->router->post('/api/logs/search', SearchLogsController::class);
         $this->router->post('/api/logs', PushLogsToDashboardController::class);
         $this->router->get('/api/replay/{log}', ReplayLogController::class);
         $this->router->post('/api/replay-modified', ReplayModifiedLogController::class);
@@ -178,5 +191,34 @@ class Factory
     public function run()
     {
         $this->loop->run();
+    }
+
+    protected function createDatabase(): void
+    {
+        $databasePath = tempnam(sys_get_temp_dir(), 'expose-client-');
+        File::put($databasePath, '');
+
+        config()->set('database.default', 'sqlite');
+        config()->set('database.connections.sqlite.database', $databasePath);
+
+        DB::purge('sqlite'); // Purges the current connection, forcing it to re-bind
+        DB::reconnect('sqlite');
+
+        info("Using SQLite database: {$databasePath}", OutputInterface::VERBOSITY_VERBOSE);
+    }
+
+    protected function migrateDatabase()
+    {
+        $this->createDatabase();
+
+        Artisan::call('migrate', [
+            '--database' => 'sqlite',
+            '--force' => true, // necessary flag to run in PHAR
+        ]);
+
+        // After running artisan commands, we need to reset Termwinds output interface.
+        Termwind::renderUsing(new ConsoleOutput());
+
+        return $this;
     }
 }
