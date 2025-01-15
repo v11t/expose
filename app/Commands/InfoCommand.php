@@ -5,7 +5,6 @@ namespace Expose\Client\Commands;
 use Expose\Client\Contracts\FetchesPlatformDataContract;
 use Expose\Client\Traits\FetchesPlatformData;
 use Exception;
-use Expose\Client\Traits\ReadsExposeConfig;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -17,7 +16,6 @@ use function Expose\Common\lineTableLabel;
 class InfoCommand extends Command implements FetchesPlatformDataContract
 {
     use FetchesPlatformData;
-    use ReadsExposeConfig;
 
     protected $signature = 'info {--json}';
 
@@ -74,6 +72,10 @@ class InfoCommand extends Command implements FetchesPlatformDataContract
 
             return 999;
         }
+    }
+
+    protected function getVersion(): string {
+        return 'v'.config('app.version');
     }
 
     public function getToken(): string
