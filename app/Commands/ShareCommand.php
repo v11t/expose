@@ -32,6 +32,7 @@ class ShareCommand extends ServerAwareCommand
     {
         banner();
         $this->ensureEnvironmentSetup();
+        $this->ensureExposeSetup();
 
         info("Expose version v" . config('app.version'), options: OutputInterface::VERBOSITY_VERBOSE);
 
@@ -146,6 +147,18 @@ class ShareCommand extends ServerAwareCommand
                 'Please refer to the documentation for more information: https://expose.dev/docs/troubleshooting',
                 abort: true
             );
+        }
+    }
+
+    protected function ensureExposeSetup(): void
+    {
+        if (empty(config('expose.auth_token'))) {
+            info();
+            error('No authentication token set.');
+            info();
+
+            info("If you don't have an Expose account yet, you can start for free at <a href='https://expose.dev'>expose.dev</a>.");
+            exit;
         }
     }
 
