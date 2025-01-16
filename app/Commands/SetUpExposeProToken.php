@@ -20,9 +20,9 @@ class SetUpExposeProToken implements FetchesPlatformDataContract
         $this->token = $token;
 
         if ($this->isProToken() && $this->hasTeamDomains()) {
-            return (new SetUpExposeDefaultDomain)($token);
+             (new SetUpExposeDefaultDomain)($token);
         } else {
-            return (new SetUpExposeDefaultServer)($token);
+             (new SetUpExposeDefaultServer)($token);
         }
     }
 
