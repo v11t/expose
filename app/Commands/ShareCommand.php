@@ -42,6 +42,8 @@ class ShareCommand extends ServerAwareCommand
         $auth = $this->option('auth') ?? config('expose.auth_token', '');
         info("Using auth token: $auth", options: OutputInterface::VERBOSITY_VERBOSE);
 
+        info("Using basic auth: ". $this->option('basicAuth'), options: OutputInterface::VERBOSITY_VERBOSE);
+
         if (strstr($this->argument('host'), 'host.docker.internal')) {
             config(['expose.dns' => true]);
         }
@@ -85,6 +87,8 @@ class ShareCommand extends ServerAwareCommand
 
             render($this->renderQrCode($link));
         }
+
+
 
         (new Factory())
             ->setLoop(app(LoopInterface::class))
