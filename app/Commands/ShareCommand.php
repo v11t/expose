@@ -17,6 +17,7 @@ use function Expose\Common\banner;
 use function Expose\Common\error;
 use function Expose\Common\info;
 use function Termwind\render;
+use function Termwind\terminal;
 
 class ShareCommand extends ServerAwareCommand
 {
@@ -30,6 +31,8 @@ class ShareCommand extends ServerAwareCommand
 
     public function handle()
     {
+        terminal()->clear();
+
         banner();
         $this->ensureEnvironmentSetup();
         $this->ensureExposeSetup();
