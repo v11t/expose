@@ -11,7 +11,7 @@ use function Expose\Common\banner;
 use function Expose\Common\info;
 use function Laravel\Prompts\table;
 
-class ServerListCommand extends Command
+class ServerListCommand extends ServerAwareCommand
 {
 
     const DEFAULT_SERVER_ENDPOINT = 'https://expose.dev/api/servers';
@@ -41,16 +41,5 @@ class ServerListCommand extends Command
         info('You can connect to a specific server with the <span class="font-bold">--server=key</span> option or set this server as default with the <span class="font-bold">default-server</span> command.');
 
         table(['Key', 'Region', 'Type'], $servers);
-    }
-
-    protected function lookupRemoteServers()
-    {
-        try {
-            return Http::withOptions([
-                'verify' => false,
-            ])->get(config('expose.server_endpoint', static::DEFAULT_SERVER_ENDPOINT))->json();
-        } catch (\Throwable $e) {
-            return [];
-        }
     }
 }
