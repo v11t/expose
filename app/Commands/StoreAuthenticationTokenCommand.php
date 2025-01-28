@@ -24,7 +24,7 @@ class StoreAuthenticationTokenCommand extends Command implements FetchesPlatform
 {
     use FetchesPlatformData;
 
-    protected $signature = 'token {token?} {--clean}';
+    protected $signature = 'token {token?}';
 
     protected $description = 'Set the authentication token to use with Expose.';
 
@@ -55,14 +55,19 @@ class StoreAuthenticationTokenCommand extends Command implements FetchesPlatform
         }
 
         if ($this->exposeToken()->isInvalid()) {
-            error("Token $this->token is invalid. Please check your token and try again. If you don't have a token, visit <a href='https://expose.dev'>expose.dev</a> to create your free account.");
 
-            if ($this->exposeToken()->hasError() && $this->getOutput()->isVerbose()) {
-                info();
-                info($this->exposeToken()->getError());
+            if (!$this->option('no-interaction')) {
+                error("Token $this->token is invalid. Please check your token and try again. If you don't have a token, visit <a href='https://expose.dev'>expose.dev</a> to create your free account.");
+
+                if ($this->exposeToken()->hasError() && $this->getOutput()->isVerbose()) {
+                    info();
+                    info($this->exposeToken()->getError());
+                }
+
+                return 1;
+            } else {
+                $this->fail("Token $this->token is invalid. Please check your token and try again.");
             }
-
-            exit;
         }
 
         $configFile = implode(DIRECTORY_SEPARATOR, [
@@ -114,7 +119,7 @@ class StoreAuthenticationTokenCommand extends Command implements FetchesPlatform
             'previous_setup.json',
         ]);
 
-        if(!file_exists($previousSetupPath)) {
+        if (!file_exists($previousSetupPath)) {
             fopen($previousSetupPath, 'w');
         }
 
