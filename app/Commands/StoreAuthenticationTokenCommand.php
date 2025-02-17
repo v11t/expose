@@ -8,6 +8,7 @@ use Expose\Client\Contracts\FetchesPlatformDataContract;
 use Expose\Client\Support\TokenNodeVisitor;
 use Expose\Client\Traits\FetchesPlatformData;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 use PhpParser\Lexer\Emulative;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\CloningVisitor;
@@ -92,6 +93,10 @@ class StoreAuthenticationTokenCommand extends Command implements FetchesPlatform
 
             (new SetupExposeProToken)($this->token);
         } else {
+            if(!$this->isProToken()) {
+                Artisan::call("default-server free");
+                Artisan::call("default-domain:clear", ['--no-interaction' => true]);
+            }
             info("Token set to $this->token.");
         }
 
