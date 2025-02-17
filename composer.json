@@ -18,7 +18,7 @@
     "require": {
         "php": "^8.2",
         "ext-json": "*",
-        "beyondcode/expose-common": "dev-main",
+        "exposedev/common": "dev-main",
         "cboden/ratchet": "dev-master",
         "chillerlan/php-qrcode": "^5.0",
         "illuminate/database": "^11.5",
@@ -88,7 +88,7 @@
         },
         {
             "type": "git",
-            "url": "https://github.com/beyondcode/expose-common"
+            "url": "https://github.com/exposedev/common"
         }
     ],
     "minimum-stability": "dev",
