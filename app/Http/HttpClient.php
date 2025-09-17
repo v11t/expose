@@ -13,6 +13,7 @@ use Ratchet\Client\WebSocket;
 use Ratchet\RFC6455\Messaging\Frame;
 use React\EventLoop\LoopInterface;
 use React\Http\Browser;
+use React\Promise\Promise;
 use React\Socket\Connector;
 
 class HttpClient
@@ -51,6 +52,10 @@ class HttpClient
         $this->logger->logRequest($requestData, $this->request);
 
         $request = $this->passRequestThroughModifiers(Message::parseRequest($requestData), $proxyConnection);
+
+        if (is_null($request)) {
+            return new Promise(fn () => null);
+        }
 
         return transform($request, function ($request) use ($proxyConnection) {
             return $this->sendRequestToApplication($request, $proxyConnection);
